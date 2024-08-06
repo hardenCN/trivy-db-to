@@ -26,8 +26,8 @@ import (
 	"os"
 
 	trivylog "github.com/aquasecurity/trivy/pkg/log"
-	"github.com/k1LoW/trivy-db-to/internal"
-	"github.com/k1LoW/trivy-db-to/version"
+	"github.com/hardenCN/trivy-db-to/internal"
+	"github.com/hardenCN/trivy-db-to/version"
 	"github.com/shibukawa/configdir"
 	"github.com/spf13/cobra"
 )
@@ -38,6 +38,7 @@ var (
 	skipInit                 bool
 	skipUpdate               bool
 	cacheDir                 string
+	dbRepository             string
 	vulnerabilitiesTableName string
 	adivisoryTableName       string
 	sources                  []string
@@ -56,7 +57,10 @@ var rootCmd = &cobra.Command{
 			cacheDir = cacheDirPath()
 		}
 		dsn := args[0]
-		if err := internal.FetchTrivyDB(ctx, cacheDir, light, quiet, skipUpdate); err != nil {
+		if dbRepository == "" {
+			dbRepository = "ghcr.io/aquasecurity/trivy-db"
+		}
+		if err := internal.FetchTrivyDB(ctx, cacheDir, dbRepository, light, quiet, skipUpdate); err != nil {
 			return err
 		}
 
@@ -95,6 +99,7 @@ func init() {
 	rootCmd.Flags().BoolVarP(&skipInit, "skip-init-db", "", false, "skip initializing target datasource")
 	rootCmd.Flags().BoolVarP(&skipUpdate, "skip-update", "", false, "skip updating Trivy DB")
 	rootCmd.Flags().StringVarP(&cacheDir, "cache-dir", "", "", "cache dir")
+	rootCmd.Flags().StringVarP(&dbRepository, "db-repository", "", "", "db repository")
 	rootCmd.Flags().StringVarP(&vulnerabilitiesTableName, "vulnerabilities-table-name", "", "vulnerabilities", "Vulnerabilities Table Name")
 	rootCmd.Flags().StringVarP(&adivisoryTableName, "advisory-table-name", "", "vulnerability_advisories", "Vulnerability Advisories Table Name")
 	rootCmd.Flags().StringArrayVarP(&sources, "source", "", nil, "Vulnerability Source (supporting regexp)")

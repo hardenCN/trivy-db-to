@@ -4,3 +4,18 @@ coverage.out
 .envrc
 .go-version
 .DS_Store
+
+######################################################################
+# IDE
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+*.history
+*.json
+
+
+/.idea/
+

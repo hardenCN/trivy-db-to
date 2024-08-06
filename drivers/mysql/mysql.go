@@ -50,7 +50,7 @@ id int PRIMARY KEY AUTO_INCREMENT,
 vulnerability_id varchar (128) NOT NULL,
 value json NOT NULL,
 created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) COMMENT = 'vulnerabilities obtained via Trivy DB' ENGINE=InnoDB DEFAULT CHARSET=utf8mb4`, m.vulnerabilitiesTableName)
+) COMMENT = 'vulnerabilities obtained via Trivy DB' ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin`, m.vulnerabilitiesTableName)
 
 	if _, err := m.db.Exec(stmt); err != nil {
 		return err
@@ -69,7 +69,7 @@ segment varchar (50) NOT NULL,
 package varchar (100) NOT NULL,
 value json NOT NULL,
 created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) COMMENT = 'vulnerability advisories obtained via Trivy DB' ENGINE=InnoDB DEFAULT CHARSET=utf8mb4`, m.adivosryTableName)
+) COMMENT = 'vulnerability advisories obtained via Trivy DB' ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin`, m.adivosryTableName)
 
 	if _, err := m.db.Exec(stmt); err != nil {
 		return err

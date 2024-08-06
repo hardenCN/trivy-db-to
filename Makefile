@@ -1,4 +1,4 @@
-PKG = github.com/k1LoW/trivy-db-to
+PKG = github.com/hardenCN/trivy-db-to
 COMMIT = $$(git describe --tags --always)
 OSNAME=${shell uname -s}
 ifeq ($(OSNAME),Darwin)

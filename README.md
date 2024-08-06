@@ -1,6 +1,6 @@
 # trivy-db-to
 
-[![build](https://github.com/k1LoW/trivy-db-to/workflows/build/badge.svg)](https://github.com/k1LoW/trivy-db-to/actions)
+[![build](https://github.com/hardenCN/trivy-db-to/workflows/build/badge.svg)](https://github.com/hardenCN/trivy-db-to/actions)
 
 `trivy-db-to` is a tool for migrating/converting vulnerability information from [Trivy DB](https://github.com/aquasecurity/trivy-db) to other datasource.
 
@@ -53,7 +53,7 @@ done
 
 ``` console
 $ export TRIVY_DB_TO_VERSION=X.X.X
-$ curl -o trivy-db-to.deb -L https://github.com/k1LoW/trivy-db-to/releases/download/v$TRIVY_DB_TO_VERSION/trivy-db-to_$TRIVY_DB_TO_VERSION-1_amd64.deb
+$ curl -o trivy-db-to.deb -L https://github.com/hardenCN/trivy-db-to/releases/download/v$TRIVY_DB_TO_VERSION/trivy-db-to_$TRIVY_DB_TO_VERSION-1_amd64.deb
 $ dpkg -i trivy-db-to.deb
 ```
 
@@ -61,14 +61,14 @@ $ dpkg -i trivy-db-to.deb
 
 ``` console
 $ export TRIVY_DB_TO_VERSION=X.X.X
-$ yum install https://github.com/k1LoW/trivy-db-to/releases/download/v$TRIVY_DB_TO_VERSION/trivy-db-to_$TRIVY_DB_TO_VERSION-1_amd64.rpm
+$ yum install https://github.com/hardenCN/trivy-db-to/releases/download/v$TRIVY_DB_TO_VERSION/trivy-db-to_$TRIVY_DB_TO_VERSION-1_amd64.rpm
 ```
 
 **apk:**
 
 ``` console
 $ export TRIVY_DB_TO_VERSION=X.X.X
-$ curl -o trivy-db-to.apk -L https://github.com/k1LoW/trivy-db-to/releases/download/v$TRIVY_DB_TO_VERSION/trivy-db-to_$TRIVY_DB_TO_VERSION-1_amd64.apk
+$ curl -o trivy-db-to.apk -L https://github.com/hardenCN/trivy-db-to/releases/download/v$TRIVY_DB_TO_VERSION/trivy-db-to_$TRIVY_DB_TO_VERSION-1_amd64.apk
 $ apk add trivy-db-to.apk
 ```
 
@@ -80,12 +80,12 @@ $ brew install k1LoW/tap/trivy-db-to
 
 **manually:**
 
-Download binary from [releases page](https://github.com/k1LoW/trivy-db-to/releases)
+Download binary from [releases page](https://github.com/hardenCN/trivy-db-to/releases)
 
 **go install:**
 
 ```console
-$ go install github.com/k1LoW/trivy-db-to@latest
+$ go install github.com/hardenCN/trivy-db-to@latest
 ```
 
 **docker:**

@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"golang.org/x/xerrors"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -13,10 +14,12 @@ import (
 	db2 "github.com/aquasecurity/trivy-db/pkg/db"
 	"github.com/aquasecurity/trivy/pkg/db"
 	"github.com/aquasecurity/trivy/pkg/fanal/types"
-	"github.com/k1LoW/trivy-db-to/drivers"
-	"github.com/k1LoW/trivy-db-to/drivers/mysql"
-	"github.com/k1LoW/trivy-db-to/drivers/postgres"
-	"github.com/k1LoW/trivy-db-to/drivers/sqlite"
+	"github.com/hardenCN/trivy-db-to/drivers"
+	"github.com/hardenCN/trivy-db-to/drivers/mysql"
+	"github.com/hardenCN/trivy-db-to/drivers/postgres"
+	"github.com/hardenCN/trivy-db-to/drivers/sqlite"
+	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/jackc/pgx/v5/stdlib"
 	"github.com/samber/lo"
 	"github.com/xo/dburl"
 	bolt "go.etcd.io/bbolt"
@@ -24,10 +27,9 @@ import (
 
 const chunkSize = 5000
 
-func FetchTrivyDB(ctx context.Context, cacheDir string, light, quiet, skipUpdate bool) error {
+func FetchTrivyDB(ctx context.Context, cacheDir, dbRepository string, light, quiet, skipUpdate bool) error {
 	_, _ = fmt.Fprintf(os.Stderr, "%s", "Fetching and updating Trivy DB ... \n")
 	appVersion := "99.9.9"
-	dbRepository := "ghcr.io/aquasecurity/trivy-db"
 	dbPath := db2.Path(cacheDir)
 	dbDir := filepath.Dir(dbPath)
 	if err := os.MkdirAll(dbDir, 0700); err != nil {
@@ -229,6 +231,36 @@ func UpdateDB(ctx context.Context, cacheDir, dsn, vulnerabilityTableName, adviso
 	return nil
 }
 
+func buildClientByDBType(driverName string, dsn string) (*sql.DB, error) {
+	switch driverName {
+	case "mysql":
+		mysqldb, err := sql.Open("mysql", dsn)
+		if err != nil {
+			return nil, xerrors.Errorf("can't open db: %w", err)
+		}
+		return mysqldb, nil
+	case "postgres", "postgresql", "pg":
+		pgconfig, err := pgxpool.ParseConfig(dsn)
+		if err != nil {
+			return nil, xerrors.Errorf("can't open db: %w", err)
+		}
+		pgdb := stdlib.OpenDB(*pgconfig.ConnConfig)
+		return pgdb, nil
+	case "oracle":
+		oracledb, err := sql.Open("godror", dsn)
+		if err != nil {
+			return nil, xerrors.Errorf("can't open db: %w", err)
+		}
+		return oracledb, nil
+	default:
+		sqldb, err := sql.Open(driverName, dsn)
+		if err != nil {
+			return nil, xerrors.Errorf("Java DB open error: %w", err)
+		}
+		return sqldb, nil
+	}
+}
+
 func dbOpen(dsn string) (*sql.DB, string, error) {
 	u, err := dburl.Parse(dsn)
 	if err != nil {
@@ -237,11 +269,11 @@ func dbOpen(dsn string) (*sql.DB, string, error) {
 	if u.Driver == "sqlite3" {
 		u.Driver = "sqlite"
 	}
-	db, err := sql.Open(u.Driver, u.DSN)
+	sqldb, err := buildClientByDBType(u.Driver, u.DSN)
 	if err != nil {
 		return nil, "", err
 	}
-	return db, u.Driver, nil
+	return sqldb, u.Driver, nil
 }
 
 var numRe = regexp.MustCompile(`\d+`)

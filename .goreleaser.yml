@@ -12,7 +12,7 @@ builds:
   goarch:
     - amd64
   ldflags:
-    - -s -w -X github.com/k1LoW/trivy-db-to.version={{.Version}} -X github.com/k1LoW/trivy-db-to.commit={{.FullCommit}} -X github.com/k1LoW/trivy-db-to.date={{.Date}} -X github.com/k1LoW/trivy-db-to/version.Version={{.Version}}
+    - -s -w -X github.com/hardenCN/trivy-db-to.version={{.Version}} -X github.com/hardenCN/trivy-db-to.commit={{.FullCommit}} -X github.com/hardenCN/trivy-db-to.date={{.Date}} -X github.com/hardenCN/trivy-db-to/version.Version={{.Version}}
 -
   id: trivy-db-to-darwin
   env:
@@ -23,7 +23,7 @@ builds:
     - amd64
     - arm64
   ldflags:
-    - -s -w -X github.com/k1LoW/trivy-db-to.version={{.Version}} -X github.com/k1LoW/trivy-db-to.commit={{.FullCommit}} -X github.com/k1LoW/trivy-db-to.date={{.Date}} -X github.com/k1LoW/trivy-db-to/version.Version={{.Version}}
+    - -s -w -X github.com/hardenCN/trivy-db-to.version={{.Version}} -X github.com/hardenCN/trivy-db-to.commit={{.FullCommit}} -X github.com/hardenCN/trivy-db-to.date={{.Date}} -X github.com/hardenCN/trivy-db-to/version.Version={{.Version}}
 archives:
 -
   id: trivy-db-to-archive
@@ -49,7 +49,7 @@ nfpms:
     file_name_template: "{{ .ProjectName }}_{{ .Version }}-1_{{ .Arch }}"
     builds:
     - trivy-db-to-linux
-    homepage: https://github.com/k1LoW/trivy-db-to
+    homepage: https://github.com/hardenCN/trivy-db-to
     maintainer: Ken'ichiro Oyama <k1lowxb@gmail.com>
     description: trivy-db-to is a tool for migrating/converting vulnerability information from Trivy DB to other datasource.
     license: MIT

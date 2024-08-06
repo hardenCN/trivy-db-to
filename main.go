@@ -23,10 +23,10 @@ package main
 
 import (
 	_ "github.com/go-sql-driver/mysql"
-	_ "github.com/lib/pq"
+	_ "github.com/godror/godror"
 	_ "modernc.org/sqlite"
 
-	"github.com/k1LoW/trivy-db-to/cmd"
+	"github.com/hardenCN/trivy-db-to/cmd"
 )
 
 func main() {

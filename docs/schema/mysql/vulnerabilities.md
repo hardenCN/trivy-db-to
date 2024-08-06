@@ -15,7 +15,7 @@ CREATE TABLE `vulnerabilities` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `v_vulnerability_id_idx` (`vulnerability_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=[Redacted by tbls] DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='vulnerabilities obtained via Trivy DB'
+) ENGINE=InnoDB AUTO_INCREMENT=[Redacted by tbls] DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='vulnerabilities obtained via Trivy DB'
 ```
 
 </details>
